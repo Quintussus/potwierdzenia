@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#EDF0F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15181B" media="(prefers-color-scheme: dark)">
+<meta name="description" content="Historia potwierdzeń nadania listów poleconych, zapisana w telefonie.">
+<title>Potwierdzenia nadania</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+@font-face{font-family:"Barlow";font-weight:400;font-display:swap;src:url(barlow-latin-ext-400-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Barlow";font-weight:400;font-display:swap;src:url(barlow-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Barlow";font-weight:500;font-display:swap;src:url(barlow-latin-ext-500-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Barlow";font-weight:500;font-display:swap;src:url(barlow-latin-500-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Barlow";font-weight:600;font-display:swap;src:url(barlow-latin-ext-600-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Barlow";font-weight:600;font-display:swap;src:url(barlow-latin-600-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Barlow Semi Condensed";font-weight:600;font-display:swap;src:url(barlow-semi-condensed-latin-ext-600-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Barlow Semi Condensed";font-weight:600;font-display:swap;src:url(barlow-semi-condensed-latin-600-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Barlow Semi Condensed";font-weight:700;font-display:swap;src:url(barlow-semi-condensed-latin-ext-700-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Barlow Semi Condensed";font-weight:700;font-display:swap;src:url(barlow-semi-condensed-latin-700-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+:root{
+  --bg:#EDF0F2; --surface:#FFFFFF; --ink:#1B2128; --muted:#5A6570; --line:#C9D0D6;
+  --accent:#B8312F; --accent-hover:#9F2826; --accent-ink:#FFFFFF; --accent-soft:#F6E1DF;
+  --ok:#2F6B3A; --ok-soft:#E1F0E3; --warn:#93340F; --warn-soft:#FBEADF; --focus:#B8312F;
+  --sans:"Barlow",Roboto,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  --cond:"Barlow Semi Condensed","Roboto Condensed","Arial Narrow",Roboto,Arial,sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15181B; --surface:#1F2428; --ink:#E6E9EC; --muted:#9AA4AE; --line:#39414A;
+    --accent:#C9413D; --accent-hover:#D9534F; --accent-ink:#FFFFFF; --accent-soft:#3B2321;
+    --ok:#8CCB97; --ok-soft:#1D3022; --warn:#F2A37E; --warn-soft:#3A2618; --focus:#E8726E;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15181B; --surface:#1F2428; --ink:#E6E9EC; --muted:#9AA4AE; --line:#39414A;
+  --accent:#C9413D; --accent-hover:#D9534F; --accent-ink:#FFFFFF; --accent-soft:#3B2321;
+  --ok:#8CCB97; --ok-soft:#1D3022; --warn:#F2A37E; --warn-soft:#3A2618; --focus:#E8726E;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+[hidden]{display:none !important}
+
+/* App bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;display:flex;align-items:center;gap:6px;height:56px;padding:0 8px 0 16px;background:var(--bg);border-bottom:1px solid transparent}
+.bar.scrolled{border-bottom-color:var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.bar h1{flex:1;margin:0;font-family:var(--cond);font-weight:700;font-size:22px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iconbtn{width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:22px;background:transparent;cursor:pointer;flex:0 0 auto}
+.iconbtn:hover{background:var(--accent-soft)}
+.iconbtn svg{width:24px;height:24px}
+.bar .iconbtn:first-child{margin-left:-10px}
+
+main{max-width:640px;margin:0 auto;padding:4px 16px 40px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 18px;border-radius:10px;border:1px solid transparent;font-weight:600;font-size:16px;cursor:pointer;text-decoration:none;user-select:none}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.primary:active{background:var(--accent-hover)}
+.btn.secondary{background:var(--surface);border-color:var(--line);color:var(--ink)}
+.btn.quiet{background:transparent;color:var(--muted);font-weight:500;padding:0 8px}
+.btn.danger{color:var(--warn);border-color:var(--warn)}
+.btn svg{width:22px;height:22px;flex:0 0 auto}
+.btn.wide{width:100%}
+.btn.big{min-height:60px;font-size:18px;border-radius:12px}
+
+/* List view */
+.capture{display:grid;gap:10px;margin:8px 0 18px}
+.capture .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.install{display:flex;gap:12px;align-items:center;padding:12px 14px;margin:0 0 16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;font-size:15px}
+.install p{margin:0;flex:1}
+.search{position:relative;margin:0 0 6px}
+.search svg{position:absolute;left:14px;top:50%;width:20px;height:20px;margin-top:-10px;color:var(--muted);pointer-events:none}
+.search input{width:100%;height:50px;padding:0 14px 0 44px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:16px;-webkit-appearance:none;appearance:none}
+.search input::placeholder{color:var(--muted);opacity:.8}
+.count{margin:10px 2px 8px;font-size:14px;color:var(--muted)}
+.empty{margin:22px 2px;color:var(--muted);font-size:15.5px;max-width:46ch}
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.list a{display:block;padding:14px 2px;border-bottom:1px solid var(--line);color:inherit;text-decoration:none}
+.list a:active{background:var(--accent-soft)}
+.li-top{display:flex;gap:12px;align-items:baseline}
+.li-name{flex:1;min-width:0;font-weight:600;font-size:16.5px;line-height:1.3;overflow-wrap:anywhere}
+.li-date{flex:0 0 auto;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.li-trk{margin-top:3px;font-family:var(--cond);font-weight:600;font-size:15.5px;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.li-note{margin-top:4px;font-size:14.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.li-missing{color:var(--warn)}
+mark{background:rgba(232,176,30,.38);color:inherit;border-radius:2px;padding:0 1px}
+
+/* Form view */
+.photo{display:flex;gap:14px;align-items:flex-start;margin:6px 0 16px}
+.thumb{width:96px;height:96px;flex:0 0 auto;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--surface);padding:0;cursor:zoom-in}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-actions{display:flex;flex-direction:column;gap:8px;min-width:0;flex:1}
+.photo-actions .btn{min-height:42px;font-size:15px;justify-content:flex-start}
+.chips{display:grid;gap:8px;margin:0 0 18px}
+.chip{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;font-size:15px;line-height:1.35}
+.chip svg{width:20px;height:20px;flex:0 0 auto;margin-top:1px}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip span{color:var(--ink)}
+.fld{display:block;margin:0 0 16px}
+.fld > span{display:block;font-size:14.5px;font-weight:600;margin:0 0 6px}
+.fld > span em{font-style:normal;font-weight:400;color:var(--muted)}
+.fld input,.fld textarea{display:block;width:100%;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:16.5px;padding:11px 12px}
+.fld input{height:50px}
+.fld textarea{min-height:96px;line-height:1.4;resize:vertical}
+.fld input.trk{font-family:var(--cond);font-weight:600;font-size:19px;letter-spacing:.04em;text-transform:uppercase}
+.hint{margin:6px 0 0;font-size:13.5px;color:var(--muted);line-height:1.4}
+.hint.warn{color:var(--warn)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;padding:3px;background:var(--surface)}
+.seg label{position:relative;cursor:pointer}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:block;padding:9px 16px;border-radius:7px;font-size:15.5px;font-weight:500;color:var(--muted)}
+.seg input:checked + span{background:var(--accent);color:var(--accent-ink)}
+.seg input:focus-visible + span{outline:2px solid var(--focus);outline-offset:2px}
+.check{display:flex;align-items:center;gap:10px;margin:12px 0 0;font-size:15.5px;cursor:pointer}
+.check input{width:22px;height:22px;accent-color:var(--accent);margin:0}
+.dup{padding:12px 14px;border-radius:10px;background:var(--warn-soft);color:var(--ink);font-size:15px;margin:0 0 14px}
+.dup b{color:var(--warn)}
+.form-actions{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-top:22px}
+
+/* Detail view */
+.d-trk{margin:6px 0 2px;font-family:var(--cond);font-weight:700;font-size:clamp(24px,7vw,30px);letter-spacing:.02em;line-height:1.15;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.d-sub{margin:0 0 14px;color:var(--muted);font-size:15px}
+.d-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 22px}
+.d-btns .btn{min-height:46px;font-size:15px}
+.d-sec{padding:14px 0;border-top:1px solid var(--line)}
+.d-sec h2{margin:0 0 4px;font-size:13.5px;font-weight:600;color:var(--muted)}
+.d-sec p{margin:0;font-size:16.5px;line-height:1.4;overflow-wrap:anywhere;white-space:pre-line}
+.d-note p{background:var(--accent-soft);padding:10px 12px;border-radius:10px}
+.d-photo{display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);cursor:zoom-in}
+.d-photo img{display:block;width:100%;height:auto}
+.d-meta{margin:14px 0 0;font-size:13.5px;color:var(--muted)}
+.d-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+
+/* Several confirmations on one photo */
+.m-intro{margin:6px 0 14px;font-size:15.5px;line-height:1.45}
+.mcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 14px}
+.mcard.off{opacity:.6}
+.mcard.off .fld,.mcard.off .chip,.mcard.off .mc-dup{display:none}
+.mc-head{display:flex;gap:12px;align-items:flex-start}
+.mcard:not(.off) .mc-head{margin:0 0 12px}
+.mc-thumb{width:88px;height:64px;flex:0 0 auto;border-radius:8px;overflow:hidden;border:1px solid var(--line);padding:0;background:var(--bg);cursor:zoom-in}
+.mc-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.mc-who{flex:1;min-width:0;font-size:14.5px;line-height:1.35;color:var(--muted);overflow-wrap:anywhere}
+.mc-who b{display:block;color:var(--ink);font-size:16px;font-weight:600}
+.mc-num{font-family:var(--cond);font-weight:700;color:var(--accent);margin-right:2px}
+.mc-inc{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted);flex:0 0 auto;cursor:pointer}
+.mc-inc input{width:22px;height:22px;accent-color:var(--accent);margin:0}
+.mcard .chip{margin:0 0 12px}
+.mcard .fld{margin-bottom:12px}
+.mc-dup{margin:2px 0 0}
+
+/* Overlays */
+.busy{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(10,12,14,.55)}
+.busy-box{background:var(--surface);color:var(--ink);border-radius:14px;padding:22px 24px;display:flex;gap:16px;align-items:center;max-width:320px;margin:0 20px;font-size:16px}
+.spinner{width:28px;height:28px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--accent);animation:spin .9s linear infinite;flex:0 0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){.spinner{animation-duration:2.4s}}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translateX(-50%);z-index:60;max-width:calc(100% - 32px);width:max-content;padding:12px 16px;border-radius:10px;background:#1B2128;color:#fff;font-size:15px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+dialog{border:0;border-radius:16px;padding:0;background:var(--surface);color:var(--ink);width:min(520px,calc(100% - 24px));max-height:calc(100% - 48px)}
+dialog::backdrop{background:rgba(10,12,14,.55)}
+.sheet{padding:20px}
+.sheet h2{margin:0 0 6px;font-family:var(--cond);font-size:22px;font-weight:700}
+.sheet p{margin:0 0 14px;font-size:15px;color:var(--muted)}
+.sheet .btn{margin:0 0 10px}
+.sheet .stats{font-size:14px;margin:6px 0 16px;color:var(--muted)}
+#photoDlg{width:100%;max-width:100%;height:100%;max-height:100%;border-radius:0;background:#000}
+#photoDlg .pv{height:100%;overflow:auto;display:grid;place-items:center}
+#photoDlg img{max-width:100%;max-height:100%;display:block}
+#photoDlg.zoom img{max-width:none;max-height:none;width:220%}
+#photoDlg .close{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:10px;background:rgba(0,0,0,.55);color:#fff}
+</style>
+</head>
+<body>
+<header class="bar" id="bar">
+  <button class="iconbtn" id="btnBack" type="button" aria-label="Wstecz" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <h1 id="barTitle">Potwierdzenia nadania</h1>
+  <button class="iconbtn" id="btnMenu" type="button" aria-label="Kopia zapasowa i ustawienia">
+    <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+  </button>
+</header>
+
+<main>
+  <!-- List -->
+  <section id="vList" hidden>
+    <div class="capture">
+      <label class="btn primary big" for="inCamera">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.6"/></svg>
+        Zrób zdjęcie potwierdzenia
+      </label>
+      <div class="row2">
+        <label class="btn secondary" for="inGallery">Z galerii</label>
+        <button class="btn secondary" type="button" id="btnManual">Wpisz ręcznie</button>
+      </div>
+    </div>
+    <div class="install" id="installBox" hidden>
+      <p>Zainstaluj aplikację, żeby otwierać ją z ekranu głównego, także bez internetu.</p>
+      <button class="btn primary" type="button" id="btnInstall">Zainstaluj</button>
+    </div>
+    <div class="search">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.75" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <input type="search" id="q" aria-label="Szukaj w historii" placeholder="Numer, adresat, nadawca, notatka…" autocomplete="off" spellcheck="false">
+    </div>
+    <p class="count" id="count" aria-live="polite"></p>
+    <ul class="list" id="list"></ul>
+    <p class="empty" id="empty" hidden>Brak zapisanych potwierdzeń. Po nadaniu listu zrób zdjęcie potwierdzenia z naklejką i stemplem – aplikacja odczyta kod QR z druczka i numer nadania z kodu kreskowego. Na jednym zdjęciu może być kilka potwierdzeń, np. cała kartka z czterema.</p>
+  </section>
+
+  <!-- Add / edit -->
+  <section id="vEdit" hidden>
+    <div class="photo">
+      <button class="thumb" type="button" id="editThumb" aria-label="Powiększ zdjęcie" hidden><img alt=""></button>
+      <div class="photo-actions">
+        <label class="btn secondary" for="inCamera2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.6"/></svg>
+          <span id="lblRetake">Zrób zdjęcie</span>
+        </label>
+        <label class="btn secondary" for="inGallery2">Wybierz z galerii</label>
+      </div>
+    </div>
+    <div class="chips" id="chips"></div>
+
+    <label class="fld"><span>Numer nadania</span>
+      <input class="trk" type="text" id="fTrk" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="20 cyfr spod kodu kreskowego">
+    </label>
+    <p class="hint warn" id="trkHint" style="margin:-10px 0 16px" hidden></p>
+    <label class="fld"><span>Data nadania</span>
+      <input type="date" id="fDate">
+    </label>
+    <p class="hint" style="margin:-10px 0 16px">Domyślnie dzień zrobienia zdjęcia – sprawdź z datą na datowniku.</p>
+    <label class="fld"><span>Adresat <em>(nazwa, ulica, kod i miejscowość)</em></span>
+      <textarea id="fTo" rows="3" autocomplete="off" spellcheck="false"></textarea>
+    </label>
+    <label class="fld"><span>Nadawca</span>
+      <textarea id="fFrom" rows="3" autocomplete="off" spellcheck="false"></textarea>
+    </label>
+    <div class="fld">
+      <span>Rodzaj przesyłki</span>
+      <div class="seg" role="radiogroup" aria-label="Rodzaj przesyłki">
+        <label><input type="radio" name="fMode" value="ekonomiczna"><span>Ekonomiczna</span></label>
+        <label><input type="radio" name="fMode" value="priorytetowa"><span>Priorytetowa</span></label>
+      </div>
+      <label class="check"><input type="checkbox" id="fZpo"> Za potwierdzeniem odbioru (ZPO)</label>
+    </div>
+    <label class="fld"><span>Notatka <em>(np. sygnatura sprawy)</em></span>
+      <textarea id="fNote" rows="2" autocomplete="off"></textarea>
+    </label>
+    <div class="dup" id="dupBox" hidden></div>
+    <div class="form-actions">
+      <button class="btn secondary" type="button" id="btnCancel">Anuluj</button>
+      <button class="btn primary" type="button" id="btnSave">Zapisz</button>
+    </div>
+  </section>
+
+  <!-- Several confirmations from one photo -->
+  <section id="vMulti" hidden>
+    <p class="m-intro" id="mIntro"></p>
+    <label class="fld"><span>Data nadania <em>(wspólna dla wszystkich)</em></span>
+      <input type="date" id="mDate">
+    </label>
+    <div id="mCards"></div>
+    <button class="btn secondary wide" type="button" id="btnAddMissing">+ Dodaj potwierdzenie, którego brakuje</button>
+    <p class="hint" style="margin:8px 2px 0">Użyj, jeśli aplikacja nie znalazła któregoś druczka – np. wypełnionego ręcznie.</p>
+    <div class="form-actions">
+      <button class="btn secondary" type="button" id="btnMultiCancel">Anuluj</button>
+      <button class="btn primary" type="button" id="btnSaveAll">Zapisz</button>
+    </div>
+  </section>
+
+  <!-- Detail -->
+  <section id="vDetail" hidden></section>
+</main>
+
+<input type="file" id="inCamera" accept="image/*" capture="environment" hidden>
+<input type="file" id="inGallery" accept="image/*" hidden>
+<input type="file" id="inCamera2" accept="image/*" capture="environment" hidden>
+<input type="file" id="inGallery2" accept="image/*" hidden>
+<input type="file" id="inImport" accept=".json,application/json" hidden>
+
+<div class="busy" id="busy" hidden><div class="busy-box"><div class="spinner"></div><span id="busyText">Odczytuję kody…</span></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<dialog id="menuDlg">
+  <div class="sheet">
+    <h2>Kopia zapasowa</h2>
+    <p>Historia jest zapisana tylko w tym telefonie. Co jakiś czas zapisz kopię, np. na Dysku Google – po zmianie telefonu wczytasz ją z powrotem.</p>
+    <p class="stats" id="stats"></p>
+    <button class="btn primary wide" type="button" id="btnExport">Zapisz kopię zapasową</button>
+    <button class="btn secondary wide" type="button" id="btnImport">Wczytaj kopię zapasową</button>
+    <button class="btn quiet wide" type="button" id="btnCloseMenu">Zamknij</button>
+  </div>
+</dialog>
+<dialog id="photoDlg" aria-label="Zdjęcie potwierdzenia">
+  <div class="pv" id="photoPv"><img alt="Zdjęcie potwierdzenia nadania"></div>
+  <button class="iconbtn close" type="button" id="btnClosePhoto" aria-label="Zamknij zdjęcie">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+</dialog>
+
+<script>
+(function(){
+  "use strict";
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  const t = (s) => String(s == null ? "" : s).trim();
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+  const PL = { "ą":"a","ć":"c","ę":"e","ł":"l","ń":"n","ó":"o","ś":"s","ź":"z","ż":"z" };
+  const norm = (s) => String(s == null ? "" : s).toLowerCase().replace(/[ąćęłńóśźż]/g, (c) => PL[c]);
+  const pad2 = (n) => (n < 10 ? "0" : "") + n;
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const frame = () => new Promise((r) => requestAnimationFrame(() => setTimeout(r, 0)));
+  const DATE_LONG = new Intl.DateTimeFormat("pl-PL", { day: "numeric", month: "long", year: "numeric" });
+  const DATE_TIME = new Intl.DateTimeFormat("pl-PL", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" });
+  function plural(n, one, few, many){
+    if (n === 1) return one;
+    const a = n % 10, b = n % 100;
+    return (a >= 2 && a <= 4 && (b < 12 || b > 14)) ? few : many;
+  }
+  function isoDay(d){ return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()); }
+  function dayFromIso(s){ const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ""); return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null; }
+  function shortDate(s){ const d = dayFromIso(s); return d ? pad2(d.getDate()) + "." + pad2(d.getMonth() + 1) + "." + d.getFullYear() : ""; }
+  function longDate(s){ const d = dayFromIso(s); return d ? DATE_LONG.format(d) : ""; }
+  function newId(){ return "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+  /* ---------- address recognition ---------- */
+  var STREET_RE = /^(?:(?:ul|al|pl|os|wyb)\.|skr\.\s*poczt|(?:ulica|aleja|aleje|plac|osiedle|rondo|skwer|bulwar|wybrzeże|skrytka|ul|al|pl|os)\s)/i;
+  var INNER_RE = /\s(?:(?:ul|al|pl|os)\.|skr\.\s*poczt|(?:ulica|aleja|aleje|plac|osiedle)\s)/i;
+  var NUM_END_RE = /[^\d\s]\s+\d+\s?[a-z]?(?:\s*(?:\/|m\.?|lok\.?|lokal)\s*\d+[a-z]?)?$/i;
+  var SUFFIX_RE = /^(?:lok\.?|lokal|m\.(?!\s*st\.)|mieszk\.?|kl\.?|klatka|piętro|pok\.?|pokój)\s*\S/i;
+  function cleanSeg(s){
+    return String(s).replace(/\s+/g, " ").replace(/^[\s,;:·•|–—-]+|[\s,;:·•|–—-]+$/g, "");
+  }
+  function looksStreet(s){ return STREET_RE.test(s) || INNER_RE.test(s) || NUM_END_RE.test(s); }
+  function compose(o){
+    return [t(o.name), t(o.street), [t(o.zip), t(o.city)].filter(Boolean).join(" ")].filter(Boolean).join("\n");
+  }
+  function parseAddress(text){
+    var res = { name:"", street:"", zip:"", city:"" };
+    var src = String(text || "").replace(/\u00a0/g, " ").replace(/^\s*(?:adresat|odbiorca|nadawca)\s*:\s*/i, "");
+    if (!src.trim()) return res;
+    var m, hit = null;
+    var zipRe = /(^|[^\d])(\d{2})\s*[-‐‑–—]\s*(\d{3})(?!\d)/g;
+    while ((m = zipRe.exec(src))) hit = { start: m.index + m[1].length, end: m.index + m[0].length, zip: m[2] + "-" + m[3] };
+    if (!hit) {
+      var z5 = /(^|[^\d\/])(\d{5})(?=\s+[^\d\s,;])/g;
+      while ((m = z5.exec(src))) hit = { start: m.index + m[1].length, end: m.index + m[0].length, zip: m[2].slice(0, 2) + "-" + m[2].slice(2) };
+    }
+    var before = src, after = "";
+    if (hit) { res.zip = hit.zip; before = src.slice(0, hit.start); after = src.slice(hit.end); }
+    var SEP = /\r?\n|[,;·•|]/;
+    var segs = [];
+    before.split(SEP).map(cleanSeg).filter(Boolean).forEach(function(s){
+      if (segs.length && SUFFIX_RE.test(s)) segs[segs.length - 1] += " " + s;
+      else segs.push(s);
+    });
+    var tail = after.split(SEP).map(cleanSeg).filter(function(s){ return s && !/^(?:polska|poland)$/i.test(s); });
+    if (tail.length) res.city = tail[0];
+    else if (segs.length >= 2 && !looksStreet(segs[segs.length - 1]) && !/\d/.test(segs[segs.length - 1])) res.city = segs.pop();
+    var idx = -1, i;
+    for (i = segs.length - 1; i >= 0; i--) if (STREET_RE.test(segs[i]) || INNER_RE.test(segs[i])) { idx = i; break; }
+    if (idx < 0) for (i = segs.length - 1; i >= 0; i--) if (NUM_END_RE.test(segs[i])) { idx = i; break; }
+    var nameParts = segs;
+    if (idx >= 0) {
+      var s = segs[idx], k = -1;
+      if (!STREET_RE.test(s)) { var im = INNER_RE.exec(s); if (im) k = im.index + 1; }
+      nameParts = segs.slice(0, idx);
+      if (k > 0) { nameParts.push(cleanSeg(s.slice(0, k))); s = s.slice(k); }
+      res.street = [cleanSeg(s)].concat(segs.slice(idx + 1)).join(", ");
+    }
+    res.name = nameParts.filter(Boolean).join(", ");
+    return res;
+  }
+
+
+  /* ---------- QR code from the Windows generator ----------
+     "DPN1", then one field per line: recipient name, street, zip, city;
+     sender name, street, zip, city; flags (E/P, +Z for ZPO); value; mass; note.
+     Text is ASCII: ~a = ą … ~z = ż (capitals ~A …), ~- = –, ~= = —, ~, = „,
+     ~' = ”, ~" = “, ~. = …, ~P = §, ~~ = ~, ~{hex} = any other character. */
+  const QR_REV = { a:"ą", c:"ć", e:"ę", l:"ł", n:"ń", o:"ó", s:"ś", x:"ź", z:"ż",
+                   A:"Ą", C:"Ć", E:"Ę", L:"Ł", N:"Ń", O:"Ó", S:"Ś", X:"Ź", Z:"Ż",
+                   "-":"–", "=":"—", ",":"„", "'":"”", '"':"“", ".":"…", P:"§", "~":"~" };
+  function qrUnesc(s){
+    return String(s).replace(/~(\{[0-9a-fA-F]{1,6}\}|[\s\S])/g, (m, g) => {
+      if (g.length > 2 && g[0] === "{") return String.fromCharCode(parseInt(g.slice(1, -1), 16));
+      return Object.prototype.hasOwnProperty.call(QR_REV, g) ? QR_REV[g] : m;
+    });
+  }
+  function parseDPN(raw){
+    const lines = String(raw || "").replace(/\r/g, "").split("\n");
+    if (lines[0] !== "DPN1") return null;
+    const f = (i) => t(qrUnesc(lines[i] || ""));
+    const flags = lines[9] || "";
+    return {
+      recipient: { name: f(1), street: f(2), zip: f(3), city: f(4) },
+      sender: { name: f(5), street: f(6), zip: f(7), city: f(8) },
+      mode: flags[0] === "P" ? "priorytetowa" : "ekonomiczna",
+      zpo: flags.indexOf("Z") >= 0,
+      value: f(10), mass: f(11), note: f(12)
+    };
+  }
+
+  /* ---------- tracking number ---------- */
+  const normTrk = (v) => String(v || "").toUpperCase().replace(/[^0-9A-Z]/g, "");
+  const TRK_PP = /^\d{20}$/;                    // e.g. 00659007734830591041
+  const TRK_S10 = /^[A-Z]{2}\d{9}[A-Z]{2}$/;    // e.g. RR123456789PL
+  function pickTracking(values){
+    const c = values.map(normTrk).filter((v) => v.length >= 8);
+    return c.find((v) => TRK_PP.test(v)) || c.find((v) => TRK_S10.test(v)) || c.sort((a, b) => b.length - a.length)[0] || "";
+  }
+  function fmtTrk(v){
+    v = normTrk(v);
+    if (TRK_S10.test(v)) return v.slice(0, 2) + " " + v.slice(2, 5) + " " + v.slice(5, 8) + " " + v.slice(8, 11) + " " + v.slice(11);
+    return v.replace(/(.{4})(?=.)/g, "$1 ");
+  }
+
+  /* ---------- storage (IndexedDB on the phone) ---------- */
+  let dbp = null;
+  function db(){
+    if (!dbp) dbp = new Promise((res, rej) => {
+      const r = indexedDB.open("potwierdzenia-nadania", 1);
+      r.onupgradeneeded = () => {
+        const d = r.result;
+        if (!d.objectStoreNames.contains("records")) d.createObjectStore("records", { keyPath: "id" });
+        if (!d.objectStoreNames.contains("photos")) d.createObjectStore("photos", { keyPath: "id" });
+      };
+      r.onsuccess = () => res(r.result);
+      r.onerror = () => rej(r.error);
+    });
+    return dbp;
+  }
+  async function tx(store, mode, fn){
+    const d = await db();
+    return new Promise((res, rej) => {
+      const x = d.transaction(store, mode);
+      const rq = fn(x.objectStore(store));
+      x.oncomplete = () => res(rq ? rq.result : undefined);
+      x.onerror = x.onabort = () => rej(x.error);
+    });
+  }
+  const dbAll = (s) => tx(s, "readonly", (st) => st.getAll());
+  const dbGet = (s, k) => tx(s, "readonly", (st) => st.get(k));
+  const dbPut = (s, v) => tx(s, "readwrite", (st) => st.put(v));
+  const dbDel = (s, k) => tx(s, "readwrite", (st) => st.delete(k));
+
+  let records = [];
+  function sortRecords(){
+    records.sort((a, b) => (b.sentDate || "").localeCompare(a.sentDate || "") || (b.created || 0) - (a.created || 0));
+  }
+  async function loadRecords(){
+    try { records = await dbAll("records"); } catch (e) { records = []; toast("Nie udało się odczytać historii z pamięci telefonu."); }
+    sortRecords();
+  }
+  let persistAsked = false;
+  function askPersist(){
+    if (persistAsked || !navigator.storage || !navigator.storage.persist) return;
+    persistAsked = true;
+    navigator.storage.persisted().then((p) => { if (!p) navigator.storage.persist(); }).catch(() => {});
+  }
+
+  /* ---------- UI helpers ---------- */
+  let toastTimer = 0;
+  function toast(msg){
+    const el = $("#toast");
+    el.textContent = msg;
+    el.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { el.hidden = true; }, 3800);
+  }
+  function busy(on, text){
+    $("#busy").hidden = !on;
+    if (text) $("#busyText").textContent = text;
+  }
+  function addrText(a){ return a ? compose(a) : ""; }
+  function addrOneLine(a){ return a ? [t(a.name), t(a.street), [t(a.zip), t(a.city)].filter(Boolean).join(" ")].filter(Boolean).join(", ") : ""; }
+  function hl(text, toks){
+    text = String(text || "");
+    if (!toks.length) return esc(text);
+    const n = norm(text), marks = [];
+    toks.forEach((tk) => { let from = 0, k; while ((k = n.indexOf(tk, from)) >= 0) { marks.push([k, k + tk.length]); from = k + tk.length; } });
+    if (!marks.length) return esc(text);
+    marks.sort((a, b) => a[0] - b[0]);
+    let out = "", pos = 0;
+    marks.forEach((m) => {
+      if (m[1] <= pos) return;
+      const s0 = Math.max(m[0], pos);
+      out += esc(text.slice(pos, s0)) + "<mark>" + esc(text.slice(s0, m[1])) + "</mark>";
+      pos = m[1];
+    });
+    return out + esc(text.slice(pos));
+  }
+  const ICON_OK = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>';
+  const ICON_WARN = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 14v.2"/></svg>';
+
+  /* ---------- views & routing ---------- */
+  const views = { list: $("#vList"), edit: $("#vEdit"), multi: $("#vMulti"), detail: $("#vDetail") };
+  function show(name, title){
+    Object.keys(views).forEach((k) => { views[k].hidden = k !== name; });
+    $("#barTitle").textContent = title;
+    $("#btnBack").hidden = name === "list";
+    window.scrollTo(0, 0);
+  }
+  function goBack(){
+    if (history.length > 1 && sessionStorage.getItem("nav") === "1") history.back();
+    else location.replace("#/");
+  }
+  function go(hash){ sessionStorage.setItem("nav", "1"); location.hash = hash; }
+  function route(){
+    const h = location.hash;
+    let m;
+    if (h === "#/nowy") { if (!draft) return location.replace("#/"); renderEdit(); }
+    else if (h === "#/wiele") { if (!multi) return location.replace("#/"); renderMulti(); }
+    else if ((m = /^#\/p\/([\w-]+)\/edytuj$/.exec(h))) startEdit(m[1]);
+    else if ((m = /^#\/p\/([\w-]+)$/.exec(h))) renderDetail(m[1]);
+    else { draft = null; multi = null; renderList(); }
+  }
+  window.addEventListener("hashchange", route);
+  $("#btnBack").addEventListener("click", goBack);
+  window.addEventListener("scroll", () => { $("#bar").classList.toggle("scrolled", window.scrollY > 4); }, { passive: true });
+
+  /* ---------- list ---------- */
+  let qTimer = 0;
+  function renderList(){
+    show("list", "Potwierdzenia nadania");
+    const toks = norm($("#q").value).split(/\s+/).filter(Boolean);
+    const rows = records.map((r) => ({ r, hay: norm([r.tracking, fmtTrk(r.tracking), addrOneLine(r.recipient), addrOneLine(r.sender), r.note,
+      shortDate(r.sentDate), longDate(r.sentDate), r.mode, r.zpo ? "zpo potwierdzenie odbioru" : ""].join(" | ")) }));
+    const hits = toks.length ? rows.filter((x) => toks.every((tk) => x.hay.indexOf(tk) >= 0)) : rows;
+    $("#empty").hidden = records.length > 0;
+    $("#count").textContent = !records.length ? "" : toks.length
+      ? (hits.length ? "Znaleziono " + hits.length + " " + plural(hits.length, "potwierdzenie", "potwierdzenia", "potwierdzeń") + "." : "Nic nie znaleziono dla „" + $("#q").value.trim() + "”.")
+      : "Zapisanych potwierdzeń: " + records.length + ".";
+    $("#list").innerHTML = hits.slice(0, 300).map(({ r }) => {
+      const name = t(r.recipient && r.recipient.name);
+      return '<li><a href="#/p/' + esc(r.id) + '">' +
+        '<div class="li-top"><span class="li-name">' + (name ? hl(name, toks) : '<span class="li-missing">bez adresata</span>') + "</span>" +
+        '<span class="li-date">' + esc(shortDate(r.sentDate)) + "</span></div>" +
+        '<div class="li-trk">' + (r.tracking ? hl(fmtTrk(r.tracking), toks) : '<span class="li-missing">brak numeru nadania</span>') + "</div>" +
+        (r.note ? '<div class="li-note">' + hl(r.note, toks) + "</div>" : "") +
+        "</a></li>";
+    }).join("");
+  }
+  $("#q").addEventListener("input", () => { clearTimeout(qTimer); qTimer = setTimeout(renderList, 120); });
+  $("#list").addEventListener("click", (e) => { if (e.target.closest("a")) sessionStorage.setItem("nav", "1"); });
+
+  /* ---------- reading a photo ---------- */
+  async function loadImage(file){
+    try { return await createImageBitmap(file, { imageOrientation: "from-image" }); } catch (e) {}
+    const url = URL.createObjectURL(file);
+    try {
+      const img = new Image();
+      img.src = url;
+      await img.decode();
+      return img;
+    } finally { setTimeout(() => URL.revokeObjectURL(url), 1000); }
+  }
+  const srcW = (s) => s.naturalWidth || s.width;
+  const srcH = (s) => s.naturalHeight || s.height;
+  function toCanvas(src, maxSide, box){
+    const sx = box ? box[0] : 0, sy = box ? box[1] : 0, sw = box ? box[2] : srcW(src), sh = box ? box[3] : srcH(src);
+    const k = Math.min(1, maxSide / Math.max(sw, sh));
+    const cv = document.createElement("canvas");
+    cv.width = Math.max(1, Math.round(sw * k));
+    cv.height = Math.max(1, Math.round(sh * k));
+    const cx = cv.getContext("2d", { willReadFrequently: true });
+    cx.drawImage(src, sx, sy, sw, sh, 0, 0, cv.width, cv.height);
+    return cv;
+  }
+  function loadScript(src){
+    return new Promise((res, rej) => {
+      if (document.querySelector('script[data-src="' + src + '"]')) return res();
+      const s = document.createElement("script");
+      s.src = src; s.async = true; s.setAttribute("data-src", src);
+      s.onload = () => res(); s.onerror = () => rej(new Error("load " + src));
+      document.head.appendChild(s);
+    });
+  }
+  /* Every reader returns {format: "qr_code" | "linear", value, pts}, where pts are
+     the code's four corners (clockwise from the code's own top-left) in pixels
+     of the original photo. */
+  const center = (p) => ({ x: (p[0].x + p[1].x + p[2].x + p[3].x) / 4, y: (p[0].y + p[1].y + p[2].y + p[3].y) / 4 });
+  const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+  function addCode(list, c){
+    if (!c.value) return;
+    const pts = c.pts && c.pts.length === 4 ? c.pts : null;
+    c.pts = pts;
+    const dup = list.some((x) => {
+      if (c.format === "linear" && x.format === "linear" && x.value !== c.value && pts && x.pts &&
+          dist(center(x.pts), center(pts)) < dist(pts[0], pts[1]) * 0.5) return true;
+      if (x.format !== c.format || x.value !== c.value) return false;
+      if (c.format !== "qr_code" || !pts || !x.pts) return true;       /* same tracking number = same sticker */
+      return dist(center(x.pts), center(pts)) < dist(pts[0], pts[1]) * 0.8;   /* two identical druczki stay apart */
+    });
+    if (!dup) list.push(c);
+  }
+  const isDPN = (c) => c.format === "qr_code" && c.value.indexOf("DPN1") === 0;
+  function trackingCodes(list){
+    const lin = list.filter((c) => c.format === "linear" && c.value.indexOf("\n") < 0 && normTrk(c.value).length >= 8);
+    const strict = lin.filter((c) => TRK_PP.test(normTrk(c.value)) || TRK_S10.test(normTrk(c.value)));
+    return strict.length ? strict : lin;
+  }
+  function complete(list){
+    const q = list.filter(isDPN).length, l = trackingCodes(list).length;
+    return l >= 1 && l >= q;
+  }
+
+  /* Chrome on Android has a built-in barcode reader; ZXing below is the fallback. */
+  async function nativeDetect(src){
+    if (!("BarcodeDetector" in window)) return null;
+    try {
+      const supported = await BarcodeDetector.getSupportedFormats();
+      const want = ["qr_code", "code_128", "code_39", "code_93", "itf", "ean_13", "codabar"].filter((f) => supported.indexOf(f) >= 0);
+      if (!want.length) return null;
+      const cv = toCanvas(src, 3000), k = cv.width / srcW(src);
+      const found = await new BarcodeDetector({ formats: want }).detect(cv);
+      const out = [];
+      found.forEach((b) => addCode(out, {
+        format: b.format === "qr_code" ? "qr_code" : "linear", value: b.rawValue || "",
+        pts: b.cornerPoints && b.cornerPoints.length === 4 ? b.cornerPoints.map((p) => ({ x: p.x / k, y: p.y / k })) : null
+      }));
+      return out;
+    } catch (e) { return null; }
+  }
+
+  /* Fallback reader: ZXing (zxing-wasm), stored with the app, works offline. */
+  let wasmReady = null;
+  function wasmModule(){
+    if (!wasmReady) {
+      wasmReady = loadScript("zxing-reader.js")
+        .then(() => window.ZXingWASM.prepareZXingModule({
+          overrides: { locateFile: (path, prefix) => path.endsWith(".wasm") ? new URL("zxing_reader.wasm", location.href).href : prefix + path },
+          fireImmediately: true
+        }))
+        .then(() => window.ZXingWASM);
+      wasmReady.catch(() => { wasmReady = null; });
+    }
+    return wasmReady;
+  }
+  async function wasmScan(src, known){
+    const out = [];
+    const enough = () => { const m = out.slice(); (known || []).forEach((c) => addCode(m, Object.assign({}, c))); return complete(m); };
+    let ZW;
+    try { ZW = await wasmModule(); } catch (e) { return out; }
+    const formats = ["QRCode", "Code128", "Code39", "Code93", "ITF", "EAN13", "Codabar"];
+    const read = async (box, side) => {
+      await frame();
+      const cv = toCanvas(src, side, box);
+      const k = cv.width / (box ? box[2] : srcW(src)), ox = box ? box[0] : 0, oy = box ? box[1] : 0;
+      let res = [];
+      try { res = await ZW.readBarcodes(cv.getContext("2d").getImageData(0, 0, cv.width, cv.height), { tryHarder: true, formats: formats, maxNumberOfSymbols: 12 }); } catch (e) {}
+      res.filter((r) => r.isValid).forEach((r) => {
+        const P = r.position || {};
+        const pts = ["topLeft", "topRight", "bottomRight", "bottomLeft"].map((n) => P[n] ? { x: ox + P[n].x / k, y: oy + P[n].y / k } : null);
+        addCode(out, { format: r.format === "QRCode" ? "qr_code" : "linear", value: r.text || "", pts: pts.every(Boolean) ? pts : null });
+      });
+    };
+    await read(null, 3200);
+    if (!enough()) await read(null, 2000);
+    if (!enough()) {
+      /* Small or blurry codes: read four overlapping quarters of the photo at higher detail. */
+      const W = srcW(src), H = srcH(src), tw = W * 0.6, th = H * 0.6;
+      for (const [x, y] of [[0, 0], [W - tw, 0], [0, H - th], [W - tw, H - th]]) await read([x, y, tw, th], 2400);
+    }
+    return out;
+  }
+  async function detectAll(src){
+    const native = await nativeDetect(src);
+    let codes = native || [];
+    const many = codes.filter(isDPN).length > 1 || trackingCodes(codes).length > 1;
+    if (!complete(codes) || many) {
+      /* ZXing also gives each code's orientation, needed to match codes on a sheet. */
+      const merged = [];
+      (await wasmScan(src, codes)).forEach((c) => addCode(merged, c));
+      codes.forEach((c) => addCode(merged, c));
+      codes = merged;
+    }
+    return { codes: codes, native: !!native };
+  }
+
+  /* ---------- several druczki on one photo ----------
+     Positions on the druczek from the Windows generator, in mm of the full-size
+     form (148 × 105): top-left corner of the QR symbol, its side, and the middle
+     of the "Numer nadawczy" box where the post office puts the barcode sticker. */
+  const G = { w: 148, h: 105.1, qx: 83.65, qy: 81.53, qs: 20.44, nx: 127.88, ny: 55.86 };
+  function frames(pts){
+    let p = pts;
+    const cross = (p[1].x - p[0].x) * (p[3].y - p[0].y) - (p[1].y - p[0].y) * (p[3].x - p[0].x);
+    if (cross < 0) p = [p[0], p[3], p[2], p[1]];
+    const out = [];
+    for (let r = 0; r < 4; r++) {   /* four possible orientations; the matching sticker decides */
+      const TL = p[r], TR = p[(r + 1) % 4], BL = p[(r + 3) % 4];
+      out.push({ O: TL, u: { x: (TR.x - TL.x) / G.qs, y: (TR.y - TL.y) / G.qs }, v: { x: (BL.x - TL.x) / G.qs, y: (BL.y - TL.y) / G.qs } });
+    }
+    return out;
+  }
+  const mapPt = (fr, X, Y) => ({ x: fr.O.x + (X - G.qx) * fr.u.x + (Y - G.qy) * fr.v.x, y: fr.O.y + (X - G.qx) * fr.u.y + (Y - G.qy) * fr.v.y });
+  const pxPerMm = (fr) => Math.hypot(fr.u.x, fr.u.y);
+  function pairUp(qrs, lins){
+    const cand = [];
+    qrs.forEach((q, qi) => {
+      if (!q.pts) return;
+      frames(q.pts).forEach((fr) => {
+        const p = mapPt(fr, G.nx, G.ny), s = pxPerMm(fr);
+        lins.forEach((l, li) => {
+          if (!l.pts) return;
+          const d = dist(p, center(l.pts)) / s;      /* in mm on the druczek */
+          if (d < 32) cand.push({ qi: qi, li: li, fr: fr, d: d });
+        });
+      });
+    });
+    cand.sort((a, b) => a.d - b.d);
+    const qUsed = {}, lUsed = {};
+    const pairs = qrs.map((q) => ({ q: q, lin: null, fr: q.pts ? frames(q.pts)[0] : null }));
+    cand.forEach((c) => {
+      if (qUsed[c.qi] || lUsed[c.li]) return;
+      qUsed[c.qi] = lUsed[c.li] = true;
+      pairs[c.qi].lin = lins[c.li];
+      pairs[c.qi].fr = c.fr;
+    });
+    return { pairs: pairs, rest: lins.filter((l, i) => !lUsed[i]) };
+  }
+  /* Straightened picture of part of a druczek: x0..x1, y0..y1 in mm on the form, s pixels per mm. */
+  function cropRegion(src, fr, x0, y0, x1, y1, s){
+    const cv = document.createElement("canvas");
+    cv.width = Math.max(1, Math.round((x1 - x0) * s));
+    cv.height = Math.max(1, Math.round((y1 - y0) * s));
+    const cx = cv.getContext("2d", { willReadFrequently: true });
+    cx.fillStyle = "#fff";
+    cx.fillRect(0, 0, cv.width, cv.height);
+    const a = fr.u.x, b = fr.u.y, c = fr.v.x, d = fr.v.y, det = a * d - b * c;
+    if (!det) return null;
+    const O = fr.O;
+    cx.setTransform(s * d / det, -s * b / det, -s * c / det, s * a / det,
+                    s * (G.qx - x0) - s * (d * O.x - c * O.y) / det,
+                    s * (G.qy - y0) - s * (-b * O.x + a * O.y) / det);
+    cx.drawImage(src, 0, 0);
+    return cv;
+  }
+  /* The whole druczek, cut out of the photo and straightened, as its own picture. */
+  const cropForm = (src, fr) => cropRegion(src, fr, -4, -4, G.w + 4, G.h + 4, 9);
+  const LINEAR = ["Code128", "Code39", "Code93", "ITF", "EAN13", "Codabar"];
+  async function readLinear(ZW, cv){
+    if (!cv) return [];
+    await frame();
+    try {
+      const res = await ZW.readBarcodes(cv.getContext("2d").getImageData(0, 0, cv.width, cv.height), { tryHarder: true, formats: LINEAR, maxNumberOfSymbols: 4 });
+      return res.filter((r) => r.isValid && r.text && normTrk(r.text).length >= 8);
+    } catch (e) { return []; }
+  }
+  /* Sticker not found yet: look exactly where it should be on this druczek, straightened. */
+  async function rescueSticker(ZW, src, q){
+    for (const fr of frames(q.pts)) {
+      const cv = cropRegion(src, fr, 100, 30, 154, 84, Math.min(14, pxPerMm(fr)));
+      const hit = (await readLinear(ZW, cv))[0];
+      if (hit) {
+        const sq = [[-5, -5], [5, -5], [5, 5], [-5, 5]].map((o) => mapPt(fr, G.nx + o[0], G.ny + o[1]));
+        return { format: "linear", value: hit.text, pts: sq };
+      }
+    }
+    return null;
+  }
+  /* Stickers on tilted druczki without a QR code: read quarters of the photo turned by a few degrees. */
+  async function angleScan(ZW, src){
+    const out = [];
+    const W = srcW(src), H = srcH(src), tw = W * 0.6, th = H * 0.6;
+    for (const deg of [-8, -4, 4, 8]) {
+      for (const [x, y] of [[0, 0], [W - tw, 0], [0, H - th], [W - tw, H - th]]) {
+        const k = Math.min(1, 2400 / Math.max(tw, th));
+        const cv = document.createElement("canvas");
+        cv.width = Math.round(tw * k); cv.height = Math.round(th * k);
+        const cx = cv.getContext("2d", { willReadFrequently: true });
+        cx.fillStyle = "#fff"; cx.fillRect(0, 0, cv.width, cv.height);
+        const rad = deg * Math.PI / 180, cos = Math.cos(rad), sin = Math.sin(rad), mx = cv.width / 2, my = cv.height / 2;
+        cx.translate(mx, my); cx.rotate(rad); cx.translate(-mx, -my);
+        cx.drawImage(src, x, y, tw, th, 0, 0, cv.width, cv.height);
+        const back = (pt) => {         /* canvas point -> photo point */
+          const dx = pt.x - mx, dy = pt.y - my;
+          return { x: x + (mx + dx * cos + dy * sin) / k, y: y + (my - dx * sin + dy * cos) / k };
+        };
+        (await readLinear(ZW, cv)).forEach((r) => {
+          const P = r.position || {};
+          const pts = ["topLeft", "topRight", "bottomRight", "bottomLeft"].map((n) => P[n] ? back(P[n]) : null);
+          addCode(out, { format: "linear", value: r.text, pts: pts.every(Boolean) ? pts : null });
+        });
+      }
+    }
+    return out;
+  }
+  const jpeg = (cv, q) => new Promise((res) => cv.toBlob(res, "image/jpeg", q));
+
+  async function analyze(file){
+    const src = await loadImage(file);
+    try {
+      const det = await detectAll(src), codes = det.codes;
+      let qrs = codes.filter(isDPN), lins = trackingCodes(codes);
+      if (qrs.length > 1 || lins.length > 1 || !lins.length) {
+        let ZW = null;
+        try { ZW = await wasmModule(); } catch (e) {}
+        if (ZW) {
+          for (const p of pairUp(qrs, lins).pairs) {
+            if (p.lin || !p.q.pts) continue;
+            const hit = await rescueSticker(ZW, src, p.q);
+            if (hit) addCode(codes, hit);
+          }
+          /* Android's own reader copes with tilted stickers; ZXing needs extra help. */
+          if (!det.native) (await angleScan(ZW, src)).forEach((c) => addCode(codes, c));
+          lins = trackingCodes(codes);
+        }
+      }
+      const full = await jpeg(toCanvas(src, 1600), 0.82);
+      const lm = file.lastModified ? new Date(file.lastModified) : null;
+      const now = new Date();
+      const date = isoDay(lm && lm <= now && now - lm < 60 * 864e5 ? lm : now);
+      if (qrs.length <= 1 && lins.length <= 1) {
+        return { multi: false, dpn: qrs[0] ? parseDPN(qrs[0].value) : null, trk: lins[0] ? normTrk(lins[0].value) : "", photo: full, date: date };
+      }
+      const { pairs, rest } = pairUp(qrs, lins);
+      const items = [];
+      for (const p of pairs) {
+        let photo = null, pos = p.q.pts ? center(p.q.pts) : { x: 0, y: 0 };
+        if (p.fr) {
+          try { const cv = cropForm(src, p.fr); if (cv) photo = await jpeg(cv, 0.85); } catch (e) {}
+          pos = mapPt(p.fr, G.w / 2, G.h / 2);
+        }
+        items.push({ dpn: parseDPN(p.q.value), trk: p.lin ? normTrk(p.lin.value) : "", photo: photo || full, pos: pos, size: p.fr ? pxPerMm(p.fr) * G.h : 0 });
+      }
+      rest.forEach((l) => items.push({ dpn: null, trk: normTrk(l.value), photo: full, pos: l.pts ? center(l.pts) : { x: 0, y: 0 }, size: 0 }));
+      /* reading order: rows top to bottom, left to right within a row */
+      const rowH = Math.max(1, ...items.map((i) => i.size)) * 0.6;
+      items.sort((a, b) => Math.floor(a.pos.y / rowH) - Math.floor(b.pos.y / rowH) || a.pos.x - b.pos.x);
+      return { multi: true, items: items, photo: full, date: date };
+    } finally {
+      if (src.close) src.close();
+    }
+  }
+
+  /* ---------- draft (new or edited record) ---------- */
+  let draft = null;
+  let lastSender = "";
+  function blankDraft(){
+    return { id: newId(), isNew: true, created: Date.now(), sentDate: isoDay(new Date()), tracking: "",
+             to: "", from: lastSender, mode: "ekonomiczna", zpo: false, value: "", mass: "", note: "",
+             source: "manual", photo: null, photoChanged: false, found: null, dupOk: false };
+  }
+  function applyAnalysis(d, res, merge){
+    if (res.photo) { d.photo = res.photo; d.photoChanged = true; }
+    if (res.dpn) {
+      const p = res.dpn;
+      if (!merge || !t(d.to)) d.to = compose(p.recipient);
+      if (!merge || !t(d.from) || d.from === lastSender) d.from = compose(p.sender);
+      d.mode = p.mode; d.zpo = p.zpo; d.value = p.value; d.mass = p.mass;
+      if (!merge || !t(d.note)) d.note = p.note;
+      d.source = "qr";
+    }
+    if (res.trk && (!merge || !t(d.tracking))) d.tracking = res.trk;
+    if (!merge) d.sentDate = res.date;
+    d.found = { qr: !!res.dpn, trk: !!res.trk };
+    d.dupOk = false;
+  }
+  async function onPhoto(file, merge){
+    if (!file) return;
+    busy(true, "Odczytuję kody z potwierdzeń…");
+    try {
+      const res = await analyze(file);
+      if (merge) {
+        if (!draft) return;
+        const one = res.multi ? { dpn: res.items[0].dpn, trk: res.items[0].trk, photo: res.items[0].photo, date: res.date } : res;
+        readForm(); applyAnalysis(draft, one, true); renderEdit();
+        if (res.multi) toast("Na zdjęciu jest kilka potwierdzeń – użyto pierwszego. Kilka naraz dodasz z ekranu głównego.");
+      } else if (res.multi) {
+        startMulti(res);
+      } else {
+        draft = blankDraft(); applyAnalysis(draft, res, false); go("#/nowy");
+      }
+    } catch (e) {
+      toast("Nie udało się wczytać zdjęcia. Spróbuj ponownie.");
+    } finally { busy(false); }
+  }
+  ["#inCamera", "#inGallery"].forEach((id) => $(id).addEventListener("change", (e) => { const f = e.target.files[0]; e.target.value = ""; onPhoto(f, false); }));
+  ["#inCamera2", "#inGallery2"].forEach((id) => $(id).addEventListener("change", (e) => { const f = e.target.files[0]; e.target.value = ""; onPhoto(f, true); }));
+  $("#btnManual").addEventListener("click", () => { draft = blankDraft(); go("#/nowy"); });
+
+  let thumbUrl = "";
+  function setImg(img, blob){
+    if (img.dataset.url) URL.revokeObjectURL(img.dataset.url);
+    const u = blob ? URL.createObjectURL(blob) : "";
+    img.dataset.url = u;
+    img.src = u;
+    return u;
+  }
+  function renderEdit(){
+    const d = draft;
+    show("edit", d.isNew ? "Nowe potwierdzenie" : "Edycja potwierdzenia");
+    $("#editThumb").hidden = !d.photo;
+    if (d.photo) thumbUrl = setImg($("#editThumb img"), d.photo);
+    $("#lblRetake").textContent = d.photo ? "Zrób nowe zdjęcie" : "Zrób zdjęcie";
+    let chips = "";
+    if (d.found) {
+      chips += d.found.qr
+        ? '<div class="chip ok">' + ICON_OK + "<span>Odczytano kod QR z druczka – adresat, nadawca i notatka są uzupełnione.</span></div>"
+        : '<div class="chip warn">' + ICON_WARN + "<span>Nie znaleziono kodu QR z druczka – uzupełnij adresata i nadawcę.</span></div>";
+      chips += d.found.trk
+        ? '<div class="chip ok">' + ICON_OK + "<span>Odczytano numer nadania z kodu kreskowego.</span></div>"
+        : '<div class="chip warn">' + ICON_WARN + "<span>Nie odczytano numeru nadania – przepisz go spod kodu kreskowego na naklejce albo zrób wyraźniejsze zdjęcie.</span></div>";
+    }
+    $("#chips").innerHTML = chips;
+    $("#fTrk").value = d.tracking ? fmtTrk(d.tracking) : "";
+    $("#fDate").value = d.sentDate || "";
+    $("#fTo").value = d.to || "";
+    $("#fFrom").value = d.from || "";
+    $$('input[name="fMode"]').forEach((r) => { r.checked = r.value === d.mode; });
+    $("#fZpo").checked = !!d.zpo;
+    $("#fNote").value = d.note || "";
+    $("#dupBox").hidden = true;
+    $("#btnSave").textContent = "Zapisz";
+    trkHint();
+    $$("#vEdit textarea").forEach(autosize);
+  }
+  function autosize(el){ el.style.height = "auto"; el.style.height = (el.scrollHeight + 2) + "px"; }
+  $$("#vEdit textarea").forEach((el) => el.addEventListener("input", () => autosize(el)));
+  function readForm(){
+    const d = draft;
+    d.tracking = normTrk($("#fTrk").value);
+    d.sentDate = $("#fDate").value || isoDay(new Date());
+    d.to = $("#fTo").value;
+    d.from = $("#fFrom").value;
+    const m = $$('input[name="fMode"]').find((r) => r.checked);
+    d.mode = m ? m.value : "ekonomiczna";
+    d.zpo = $("#fZpo").checked;
+    d.note = $("#fNote").value;
+  }
+  function trkHint(){
+    const v = normTrk($("#fTrk").value), h = $("#trkHint");
+    const ok = !v || TRK_PP.test(v) || TRK_S10.test(v);
+    h.hidden = ok;
+    if (!ok) h.textContent = "Nietypowy numer (" + v.length + " znaków) – krajowe listy polecone mają zwykle 20 cyfr. Sprawdź z naklejką.";
+  }
+  $("#fTrk").addEventListener("input", () => { trkHint(); if (draft) draft.dupOk = false; $("#dupBox").hidden = true; $("#btnSave").textContent = "Zapisz"; });
+  $("#fTrk").addEventListener("blur", () => { const v = normTrk($("#fTrk").value); if (v) $("#fTrk").value = fmtTrk(v); });
+  $("#editThumb").addEventListener("click", () => { if (draft && draft.photo) openPhoto(draft.photo); });
+  $("#btnCancel").addEventListener("click", () => { draft = null; goBack(); });
+
+  $("#btnSave").addEventListener("click", async () => {
+    if (!draft) return;
+    readForm();
+    const d = draft;
+    if (!d.tracking) {
+      toast("Wpisz numer nadania – to najważniejsza informacja na potwierdzeniu.");
+      $("#fTrk").focus();
+      return;
+    }
+    const dup = records.find((r) => r.id !== d.id && r.tracking === d.tracking);
+    if (dup && !d.dupOk) {
+      $("#dupBox").innerHTML = "<b>Ten numer nadania jest już zapisany</b> – " + esc(shortDate(dup.sentDate)) + ", " + esc(t(dup.recipient && dup.recipient.name) || "bez adresata") + ". Zapisać mimo to?";
+      $("#dupBox").hidden = false;
+      $("#btnSave").textContent = "Zapisz mimo to";
+      d.dupOk = true;
+      $("#dupBox").scrollIntoView({ block: "center" });
+      return;
+    }
+    const old = records.find((r) => r.id === d.id);
+    const rec = {
+      id: d.id, created: d.created, updated: Date.now(), sentDate: d.sentDate, tracking: d.tracking,
+      recipient: parseAddress(d.to), sender: parseAddress(d.from),
+      mode: d.mode, zpo: d.zpo, value: t(d.value), mass: t(d.mass), note: t(d.note),
+      source: d.source, hasPhoto: !!d.photo || !!(old && old.hasPhoto)
+    };
+    try {
+      if (d.photo && d.photoChanged) await dbPut("photos", { id: d.id, blob: d.photo });
+      await dbPut("records", rec);
+    } catch (e) {
+      toast(e && e.name === "QuotaExceededError" ? "Brak miejsca w pamięci telefonu." : "Nie udało się zapisać. Spróbuj ponownie.");
+      return;
+    }
+    records = records.filter((r) => r.id !== rec.id).concat([rec]);
+    sortRecords();
+    if (t(d.from)) lastSender = compose(rec.sender);
+    askPersist();
+    const wasNew = d.isNew;
+    draft = null;
+    toast("Zapisano potwierdzenie.");
+    if (wasNew) location.replace("#/p/" + rec.id);
+    else goBack();
+  });
+
+  async function startEdit(id){
+    const r = records.find((x) => x.id === id);
+    if (!r) return location.replace("#/");
+    if (!draft || draft.id !== id) {
+      let photo = null;
+      if (r.hasPhoto) { try { const p = await dbGet("photos", id); photo = p ? p.blob : null; } catch (e) {} }
+      draft = { id: r.id, isNew: false, created: r.created, sentDate: r.sentDate, tracking: r.tracking,
+                to: compose(r.recipient || {}), from: compose(r.sender || {}), mode: r.mode || "ekonomiczna", zpo: !!r.zpo,
+                value: r.value || "", mass: r.mass || "", note: r.note || "", source: r.source || "manual",
+                photo, photoChanged: false, found: null, dupOk: false };
+    }
+    renderEdit();
+  }
+
+  /* ---------- several confirmations from one photo ---------- */
+  let multi = null;
+  function startMulti(res){
+    multi = {
+      date: res.date, dupOk: false, photo: res.photo,
+      items: res.items.map((it, i) => {
+        const p = it.dpn;
+        return { id: newId() + i, dpn: p, photo: it.photo, include: true, tracking: it.trk,
+                 to: p ? compose(p.recipient) : "", from: p ? compose(p.sender) : lastSender,
+                 mode: p ? p.mode : "ekonomiczna", zpo: p ? p.zpo : false, value: p ? p.value : "", mass: p ? p.mass : "",
+                 note: p ? p.note : "", found: { qr: !!p, trk: !!it.trk } };
+      })
+    };
+    go("#/wiele");
+  }
+  function cardHTML(it, i){
+    const r = it.dpn ? it.dpn.recipient : null;
+    const who = r
+      ? "<b><span class=\"mc-num\">" + (i + 1) + ".</span> " + esc(t(r.name) || "bez nazwy adresata") + "</b>" +
+        esc([t(r.street), [t(r.zip), t(r.city)].filter(Boolean).join(" ")].filter(Boolean).join(", "))
+      : "<b><span class=\"mc-num\">" + (i + 1) + ".</span> Druczek bez kodu QR</b>Wpisz adresata poniżej.";
+    return '<div class="mcard' + (it.include ? "" : " off") + '" data-i="' + i + '">' +
+      '<div class="mc-head">' +
+        '<button class="mc-thumb" type="button" data-act="photo" aria-label="Powiększ zdjęcie druczka ' + (i + 1) + '"><img alt=""></button>' +
+        '<div class="mc-who">' + who + "</div>" +
+        '<label class="mc-inc"><input type="checkbox" data-k="include"' + (it.include ? " checked" : "") + "> Zapisz</label>" +
+      "</div>" +
+      (it.found.trk ? "" : '<div class="chip warn">' + ICON_WARN + "<span>Nie odczytano numeru nadania – przepisz go z naklejki (stuknij zdjęcie, żeby je powiększyć).</span></div>") +
+      '<label class="fld"><span>Numer nadania</span><input class="trk" type="text" data-k="tracking" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="20 cyfr spod kodu kreskowego" value="' + esc(it.tracking ? fmtTrk(it.tracking) : "") + '"></label>' +
+      (it.dpn ? "" : '<label class="fld"><span>Adresat <em>(nazwa, ulica, kod i miejscowość)</em></span><textarea data-k="to" rows="3">' + esc(it.to) + "</textarea></label>") +
+      '<label class="fld"><span>Notatka</span><textarea data-k="note" rows="2">' + esc(it.note) + "</textarea></label>" +
+      '<p class="hint warn mc-dup" hidden></p>' +
+    "</div>";
+  }
+  function renderMulti(){
+    show("multi", "Potwierdzenia ze zdjęcia");
+    const n = multi.items.length, found = multi.items.filter((it) => it.found.trk).length;
+    $("#mIntro").textContent = "Na zdjęciu " + (n === 1 ? "jest 1 potwierdzenie" : "są " + n + " " + plural(n, "potwierdzenie", "potwierdzenia", "potwierdzeń")) +
+      (found === n ? ". Wszystkie numery nadania zostały odczytane – sprawdź je i zapisz." : ". Odczytano " + found + " z " + n + " numerów nadania – brakujące przepisz z naklejek.");
+    $("#mDate").value = multi.date;
+    $("#mCards").innerHTML = multi.items.map(cardHTML).join("");
+    multi.items.forEach((it, i) => { const img = $('.mcard[data-i="' + i + '"] .mc-thumb img'); if (img && it.photo) setImg(img, it.photo); });
+    $$("#mCards textarea").forEach(autosize);
+    updateSaveAll();
+  }
+  function updateSaveAll(){
+    const n = multi.items.filter((it) => it.include).length;
+    $("#btnSaveAll").textContent = multi.dupOk ? "Zapisz mimo to" : (n ? "Zapisz " + (n === 1 ? "1 potwierdzenie" : n + " " + plural(n, "potwierdzenie", "potwierdzenia", "potwierdzeń")) : "Zapisz");
+  }
+  $("#mCards").addEventListener("input", (e) => {
+    const el = e.target, card = el.closest(".mcard");
+    if (!card || !multi) return;
+    const it = multi.items[+card.dataset.i], k = el.getAttribute("data-k");
+    if (k === "include") { it.include = el.checked; card.classList.toggle("off", !el.checked); updateSaveAll(); return; }
+    if (k) it[k] = el.value;
+    if (el.tagName === "TEXTAREA") autosize(el);
+    if (k === "tracking") { multi.dupOk = false; $(".mc-dup", card).hidden = true; updateSaveAll(); }
+  });
+  $("#mCards").addEventListener("focusout", (e) => {
+    if (!e.target.matches("input.trk")) return;
+    const v = normTrk(e.target.value);
+    if (v) e.target.value = fmtTrk(v);
+  });
+  $("#mCards").addEventListener("click", (e) => {
+    const b = e.target.closest('[data-act="photo"]');
+    if (!b || !multi) return;
+    const it = multi.items[+b.closest(".mcard").dataset.i];
+    if (it && it.photo) openPhoto(it.photo);
+  });
+  $("#mDate").addEventListener("input", () => { if (multi) multi.date = $("#mDate").value; });
+  $("#btnAddMissing").addEventListener("click", () => {
+    if (!multi) return;
+    multi.items.push({ id: newId() + multi.items.length, dpn: null, photo: multi.photo, include: true, tracking: "",
+                       to: "", from: lastSender, mode: "ekonomiczna", zpo: false, value: "", mass: "", note: "",
+                       found: { qr: false, trk: false } });
+    renderMulti();
+    const last = $('.mcard[data-i="' + (multi.items.length - 1) + '"]');
+    if (last) { last.scrollIntoView({ block: "center" }); $("input.trk", last).focus({ preventScroll: true }); }
+  });
+  $("#btnMultiCancel").addEventListener("click", () => { multi = null; goBack(); });
+  $("#btnSaveAll").addEventListener("click", async () => {
+    if (!multi) return;
+    const chosen = multi.items.filter((it) => it.include);
+    if (!chosen.length) { toast("Zaznacz co najmniej jedno potwierdzenie do zapisania."); return; }
+    let missing = null, warned = false;
+    multi.items.forEach((it, i) => {
+      const card = $('.mcard[data-i="' + i + '"]'), msg = $(".mc-dup", card);
+      msg.hidden = true;
+      if (!it.include) return;
+      it.tracking = normTrk(it.tracking);
+      if (!it.tracking) { msg.textContent = "Wpisz numer nadania."; msg.hidden = false; if (!missing) missing = card; return; }
+      const inHist = records.find((r) => r.tracking === it.tracking);
+      const twin = chosen.find((o) => o !== it && normTrk(o.tracking) === it.tracking);
+      if (inHist) { msg.textContent = "Ten numer jest już zapisany – " + shortDate(inHist.sentDate) + ", " + (t(inHist.recipient && inHist.recipient.name) || "bez adresata") + "."; msg.hidden = false; warned = true; }
+      else if (twin) { msg.textContent = "Ten sam numer ma inny druczek z tego zdjęcia – sprawdź naklejki."; msg.hidden = false; warned = true; }
+    });
+    if (missing) { toast("Uzupełnij brakujące numery nadania."); missing.scrollIntoView({ block: "center" }); return; }
+    if (warned && !multi.dupOk) { multi.dupOk = true; updateSaveAll(); toast("Sprawdź oznaczone numery nadania."); return; }
+    const date = $("#mDate").value || isoDay(new Date());
+    let saved = 0;
+    for (const it of chosen) {
+      const now = Date.now() + saved;
+      const rec = {
+        id: it.id, created: now, updated: now, sentDate: date, tracking: it.tracking,
+        recipient: it.dpn ? Object.assign({}, it.dpn.recipient) : parseAddress(it.to),
+        sender: it.dpn ? Object.assign({}, it.dpn.sender) : parseAddress(it.from),
+        mode: it.mode, zpo: it.zpo, value: t(it.value), mass: t(it.mass), note: t(it.note),
+        source: it.dpn ? "qr" : "manual", hasPhoto: !!it.photo
+      };
+      try {
+        if (it.photo) await dbPut("photos", { id: rec.id, blob: it.photo });
+        await dbPut("records", rec);
+      } catch (e) {
+        toast(e && e.name === "QuotaExceededError" ? "Brak miejsca w pamięci telefonu." : "Nie udało się zapisać wszystkich potwierdzeń.");
+        break;
+      }
+      records.push(rec);
+      saved++;
+    }
+    sortRecords();
+    askPersist();
+    if (!saved) return;
+    multi = null;
+    toast("Zapisano " + saved + " " + plural(saved, "potwierdzenie", "potwierdzenia", "potwierdzeń") + ".");
+    location.replace("#/");
+  });
+
+  /* ---------- detail ---------- */
+  async function renderDetail(id){
+    const r = records.find((x) => x.id === id);
+    if (!r) return location.replace("#/");
+    show("detail", "Potwierdzenie");
+    const v = views.detail;
+    const flags = [r.mode === "priorytetowa" ? "Priorytetowa" : "Ekonomiczna"];
+    if (r.zpo) flags.push("ZPO");
+    if (r.value) flags.push("wartość " + r.value + " zł");
+    if (r.mass) flags.push(r.mass + " g");
+    v.innerHTML =
+      '<div class="d-trk">' + (r.tracking ? esc(fmtTrk(r.tracking)) : "Brak numeru nadania") + "</div>" +
+      '<p class="d-sub">Nadano ' + esc(longDate(r.sentDate)) + " · " + esc(flags.join(" · ")) + "</p>" +
+      (r.tracking ? '<div class="d-btns"><button class="btn secondary" type="button" data-act="copy">Kopiuj numer</button>' +
+        '<button class="btn secondary" type="button" data-act="track">Śledź w eMonitoringu</button></div>' : "") +
+      '<div class="d-sec"><h2>Adresat</h2><p>' + esc(addrText(r.recipient) || "—") + "</p></div>" +
+      '<div class="d-sec"><h2>Nadawca</h2><p>' + esc(addrText(r.sender) || "—") + "</p></div>" +
+      (r.note ? '<div class="d-sec d-note"><h2>Notatka</h2><p>' + esc(r.note) + "</p></div>" : "") +
+      (r.hasPhoto ? '<div class="d-sec"><h2>Zdjęcie potwierdzenia</h2><button class="d-photo" type="button" data-act="photo" aria-label="Powiększ zdjęcie"><img alt="Zdjęcie potwierdzenia nadania"></button></div>' : "") +
+      '<p class="d-meta">Dodano ' + esc(DATE_TIME.format(new Date(r.created || Date.now()))) + (r.source === "qr" ? " · dane z kodu QR" : " · dane wpisane ręcznie") + "</p>" +
+      '<div class="d-actions"><button class="btn secondary" type="button" data-act="edit">Edytuj</button>' +
+      '<button class="btn secondary" type="button" data-act="del">Usuń</button></div>';
+    if (r.hasPhoto) {
+      try { const p = await dbGet("photos", id); if (p && p.blob) { setImg($(".d-photo img", v), p.blob); v.dataset.photo = id; } } catch (e) {}
+    }
+    v.dataset.id = id;
+  }
+  views.detail.addEventListener("click", async (e) => {
+    const b = e.target.closest("[data-act]");
+    if (!b) return;
+    const id = views.detail.dataset.id;
+    const r = records.find((x) => x.id === id);
+    if (!r) return;
+    const act = b.getAttribute("data-act");
+    if (act === "copy" || act === "track") {
+      try { await navigator.clipboard.writeText(r.tracking); } catch (err) {}
+      if (act === "copy") toast("Skopiowano numer nadania.");
+      else { toast("Numer skopiowany – wklej go na stronie eMonitoringu."); window.open("https://emonitoring.poczta-polska.pl/", "_blank", "noopener"); }
+    } else if (act === "photo") {
+      try { const p = await dbGet("photos", id); if (p) openPhoto(p.blob); } catch (err) {}
+    } else if (act === "edit") {
+      go("#/p/" + id + "/edytuj");
+    } else if (act === "del") {
+      if (b.dataset.armed !== "1") {
+        b.dataset.armed = "1";
+        b.textContent = "Na pewno usunąć?";
+        b.classList.add("danger");
+        setTimeout(() => { if (b.isConnected) { b.dataset.armed = ""; b.textContent = "Usuń"; b.classList.remove("danger"); } }, 4000);
+        return;
+      }
+      try { await dbDel("records", id); await dbDel("photos", id); } catch (err) { toast("Nie udało się usunąć."); return; }
+      records = records.filter((x) => x.id !== id);
+      toast("Usunięto potwierdzenie.");
+      goBack();
+    }
+  });
+
+  /* ---------- photo viewer ---------- */
+  function openPhoto(blob){
+    const dlg = $("#photoDlg");
+    setImg($("#photoPv img"), blob);
+    dlg.classList.remove("zoom");
+    if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
+  }
+  $("#photoPv").addEventListener("click", () => $("#photoDlg").classList.toggle("zoom"));
+  $("#btnClosePhoto").addEventListener("click", () => $("#photoDlg").close());
+
+  /* ---------- backup ---------- */
+  function blobToDataURL(b){ return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = () => rej(r.error); r.readAsDataURL(b); }); }
+  async function dataURLToBlob(u){ return (await fetch(u)).blob(); }
+  async function updateStats(){
+    let txt = "Zapisanych potwierdzeń: " + records.length + ".";
+    try {
+      if (navigator.storage && navigator.storage.estimate) {
+        const est = await navigator.storage.estimate();
+        txt += " Zajęte miejsce: " + (Math.max(0.1, (est.usage || 0) / 1048576)).toFixed(1).replace(".", ",") + " MB.";
+      }
+      if (navigator.storage && navigator.storage.persisted) {
+        txt += (await navigator.storage.persisted()) ? " Dane są chronione przed automatycznym usunięciem." : " Telefon może usunąć dane przy braku miejsca – tym bardziej warto robić kopię.";
+      }
+    } catch (e) {}
+    $("#stats").textContent = txt;
+  }
+  $("#btnMenu").addEventListener("click", () => { updateStats(); $("#menuDlg").showModal(); });
+  $("#btnCloseMenu").addEventListener("click", () => $("#menuDlg").close());
+  $("#btnExport").addEventListener("click", async () => {
+    $("#menuDlg").close();
+    busy(true, "Przygotowuję kopię zapasową…");
+    try {
+      const all = await dbAll("records");
+      const out = [];
+      for (const r of all) {
+        const o = Object.assign({}, r);
+        if (r.hasPhoto) { const p = await dbGet("photos", r.id); if (p && p.blob) o.photo = await blobToDataURL(p.blob); }
+        out.push(o);
+      }
+      const name = "potwierdzenia-kopia-" + isoDay(new Date()) + ".json";
+      const file = new File([JSON.stringify({ format: "potwierdzenia-nadania", version: 1, exported: new Date().toISOString(), records: out })], name, { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(file);
+      a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+      toast("Zapisano kopię „" + name + "” w Pobranych.");
+    } catch (e) { toast("Nie udało się przygotować kopii."); }
+    finally { busy(false); }
+  });
+  $("#btnImport").addEventListener("click", () => { $("#menuDlg").close(); $("#inImport").click(); });
+  $("#inImport").addEventListener("change", async (e) => {
+    const f = e.target.files[0];
+    e.target.value = "";
+    if (!f) return;
+    busy(true, "Wczytuję kopię zapasową…");
+    try {
+      const data = JSON.parse(await f.text());
+      if (!data || data.format !== "potwierdzenia-nadania" || !Array.isArray(data.records)) throw new Error("format");
+      let added = 0, updated = 0;
+      for (const o of data.records) {
+        if (!o || typeof o.id !== "string") continue;
+        const cur = records.find((r) => r.id === o.id);
+        if (cur && (cur.updated || 0) >= (o.updated || 0)) continue;
+        const rec = Object.assign({}, o);
+        delete rec.photo;
+        if (typeof o.photo === "string" && o.photo.indexOf("data:image/") === 0) { await dbPut("photos", { id: o.id, blob: await dataURLToBlob(o.photo) }); rec.hasPhoto = true; }
+        await dbPut("records", rec);
+        if (cur) updated++; else added++;
+      }
+      await loadRecords();
+      route();
+      toast("Wczytano kopię: " + added + " " + plural(added, "nowe potwierdzenie", "nowe potwierdzenia", "nowych potwierdzeń") + (updated ? ", zaktualizowano " + updated : "") + ".");
+    } catch (err) { toast("To nie jest kopia zapasowa tej aplikacji."); }
+    finally { busy(false); }
+  });
+
+  /* ---------- install & offline ---------- */
+  let installEvt = null;
+  const standalone = () => window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); installEvt = e; $("#installBox").hidden = standalone(); });
+  window.addEventListener("appinstalled", () => { $("#installBox").hidden = true; installEvt = null; });
+  $("#btnInstall").addEventListener("click", async () => {
+    if (!installEvt) return;
+    installEvt.prompt();
+    try { await installEvt.userChoice; } catch (e) {}
+    installEvt = null;
+    $("#installBox").hidden = true;
+  });
+  if ("serviceWorker" in navigator && location.protocol !== "file:") {
+    window.addEventListener("load", () => { navigator.serviceWorker.register("./sw.js").catch(() => {}); });
+  }
+
+  /* ---------- start ---------- */
+  (async () => {
+    await loadRecords();
+    const withSender = records.slice().sort((a, b) => (b.created || 0) - (a.created || 0)).find((r) => r.sender && t(r.sender.name));
+    if (withSender) lastSender = compose(withSender.sender);
+    route();
+  })();
+})();
+</script>
+</body>
+</html>
