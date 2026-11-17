@@ -2,7 +2,7 @@
    Every file is served from the cache at once and refreshed in the
    background, so a new version uploaded to the server shows up on the
    next launch. Raise VERSION whenever the file list changes. */
-const VERSION = "potwierdzenia-v3";
+const VERSION = "potwierdzenia-v4";
 const FILES = [
   "./",
   "./index.html",

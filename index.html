@@ -162,7 +162,7 @@ mark{background:rgba(232,176,30,.38);color:inherit;border-radius:2px;padding:0 1
 .mc-inc input{width:22px;height:22px;accent-color:var(--accent);margin:0}
 .mcard .chip{margin:0 0 12px}
 .mcard .fld{margin-bottom:12px}
-.mc-dup{margin:2px 0 0}
+.mc-dup,.mc-chk{margin:2px 0 6px}
 
 /* Overlays */
 .busy{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(10,12,14,.55)}
@@ -417,13 +417,32 @@ dialog::backdrop{background:rgba(10,12,14,.55)}
   }
 
   /* ---------- tracking number ---------- */
-  const normTrk = (v) => String(v || "").toUpperCase().replace(/[^0-9A-Z]/g, "");
+  /* The sticker is a GS1-128 barcode: "(00)" + an 18-digit SSCC. Some readers put
+     the symbology identifier "]C1" in front of the number; it is not part of it. */
+  function normTrk(v){
+    let s = String(v || "").trim()
+      .replace(/^\][A-Za-z][0-9A-Za-z]/, "")
+      .toUpperCase().replace(/[^0-9A-Z]/g, "");
+    const m = /^[A-Z]\d(\d{20})$/.exec(s);       /* the same identifier with its "]" already lost, e.g. C100659… */
+    if (m) s = m[1];
+    return s;
+  }
   const TRK_PP = /^\d{20}$/;                    // e.g. 00659007734830591041
   const TRK_S10 = /^[A-Z]{2}\d{9}[A-Z]{2}$/;    // e.g. RR123456789PL
+  /* GS1 check digit of the SSCC (last digit): true / false, or null if not a 20-digit number. */
+  function ppCheckOk(v){
+    if (!TRK_PP.test(v)) return null;
+    const d = v.slice(2).split("").map(Number), chk = d.pop();
+    let sum = 0;
+    for (let i = d.length - 1, w = 3; i >= 0; i--, w = 4 - w) sum += d[i] * w;
+    return (10 - sum % 10) % 10 === chk;
+  }
   function pickTracking(values){
     const c = values.map(normTrk).filter((v) => v.length >= 8);
-    return c.find((v) => TRK_PP.test(v)) || c.find((v) => TRK_S10.test(v)) || c.sort((a, b) => b.length - a.length)[0] || "";
+    return c.find((v) => ppCheckOk(v) === true) || c.find((v) => TRK_PP.test(v)) || c.find((v) => TRK_S10.test(v)) ||
+           c.sort((a, b) => b.length - a.length)[0] || "";
   }
+  const CHECK_MSG = "Cyfra kontrolna numeru się nie zgadza – porównaj go z naklejką, mógł zostać źle odczytany lub przepisany.";
   function fmtTrk(v){
     v = normTrk(v);
     if (TRK_S10.test(v)) return v.slice(0, 2) + " " + v.slice(2, 5) + " " + v.slice(5, 8) + " " + v.slice(8, 11) + " " + v.slice(11);
@@ -465,6 +484,14 @@ dialog::backdrop{background:rgba(10,12,14,.55)}
   }
   async function loadRecords(){
     try { records = await dbAll("records"); } catch (e) { records = []; toast("Nie udało się odczytać historii z pamięci telefonu."); }
+    /* numbers saved by an earlier version with the reader's "C1" prefix */
+    const wrong = records.filter((r) => r.tracking && normTrk(r.tracking) !== r.tracking);
+    for (const r of wrong) {
+      r.tracking = normTrk(r.tracking);
+      r.updated = Date.now();
+      try { await dbPut("records", r); } catch (e) {}
+    }
+    if (wrong.length) setTimeout(() => toast("Poprawiono numer nadania w " + wrong.length + " " + plural(wrong.length, "potwierdzeniu", "potwierdzeniach", "potwierdzeniach") + " (usunięto zbędny przedrostek „C1”)."), 700);
     sortRecords();
   }
   let persistAsked = false;
@@ -600,14 +627,21 @@ dialog::backdrop{background:rgba(10,12,14,.55)}
     if (!c.value) return;
     const pts = c.pts && c.pts.length === 4 ? c.pts : null;
     c.pts = pts;
-    const dup = list.some((x) => {
-      if (c.format === "linear" && x.format === "linear" && x.value !== c.value && pts && x.pts &&
-          dist(center(x.pts), center(pts)) < dist(pts[0], pts[1]) * 0.5) return true;
-      if (x.format !== c.format || x.value !== c.value) return false;
-      if (c.format !== "qr_code" || !pts || !x.pts) return true;       /* same tracking number = same sticker */
-      return dist(center(x.pts), center(pts)) < dist(pts[0], pts[1]) * 0.8;   /* two identical druczki stay apart */
-    });
-    if (!dup) list.push(c);
+    const lin = c.format === "linear", key = lin ? normTrk(c.value) : c.value;
+    for (let i = 0; i < list.length; i++) {
+      const x = list[i];
+      if (x.format !== c.format) continue;
+      const xkey = lin ? normTrk(x.value) : x.value;
+      if (lin && xkey !== key && pts && x.pts && dist(center(x.pts), center(pts)) < dist(pts[0], pts[1]) * 0.5) {
+        /* two different numbers on the same sticker: one is a misread – keep the one with a valid check digit */
+        if (ppCheckOk(key) === true && ppCheckOk(xkey) !== true) list[i] = c;
+        return;
+      }
+      if (xkey !== key) continue;
+      if (lin || !pts || !x.pts) return;                                       /* same number = same sticker */
+      if (dist(center(x.pts), center(pts)) < dist(pts[0], pts[1]) * 0.8) return; /* two identical druczki stay apart */
+    }
+    list.push(c);
   }
   const isDPN = (c) => c.format === "qr_code" && c.value.indexOf("DPN1") === 0;
   function trackingCodes(list){
@@ -947,9 +981,10 @@ dialog::backdrop{background:rgba(10,12,14,.55)}
   }
   function trkHint(){
     const v = normTrk($("#fTrk").value), h = $("#trkHint");
-    const ok = !v || TRK_PP.test(v) || TRK_S10.test(v);
-    h.hidden = ok;
+    const ok = !v || TRK_PP.test(v) || TRK_S10.test(v), chk = ppCheckOk(v);
+    h.hidden = ok && chk !== false;
     if (!ok) h.textContent = "Nietypowy numer (" + v.length + " znaków) – krajowe listy polecone mają zwykle 20 cyfr. Sprawdź z naklejką.";
+    else if (chk === false) h.textContent = CHECK_MSG;
   }
   $("#fTrk").addEventListener("input", () => { trkHint(); if (draft) draft.dupOk = false; $("#dupBox").hidden = true; $("#btnSave").textContent = "Zapisz"; });
   $("#fTrk").addEventListener("blur", () => { const v = normTrk($("#fTrk").value); if (v) $("#fTrk").value = fmtTrk(v); });
@@ -1044,6 +1079,7 @@ dialog::backdrop{background:rgba(10,12,14,.55)}
       '<label class="fld"><span>Numer nadania</span><input class="trk" type="text" data-k="tracking" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="20 cyfr spod kodu kreskowego" value="' + esc(it.tracking ? fmtTrk(it.tracking) : "") + '"></label>' +
       (it.dpn ? "" : '<label class="fld"><span>Adresat <em>(nazwa, ulica, kod i miejscowość)</em></span><textarea data-k="to" rows="3">' + esc(it.to) + "</textarea></label>") +
       '<label class="fld"><span>Notatka</span><textarea data-k="note" rows="2">' + esc(it.note) + "</textarea></label>" +
+      '<p class="hint warn mc-chk"' + (ppCheckOk(normTrk(it.tracking)) === false ? "" : " hidden") + ">" + CHECK_MSG + "</p>" +
       '<p class="hint warn mc-dup" hidden></p>' +
     "</div>";
   }
@@ -1069,7 +1105,7 @@ dialog::backdrop{background:rgba(10,12,14,.55)}
     if (k === "include") { it.include = el.checked; card.classList.toggle("off", !el.checked); updateSaveAll(); return; }
     if (k) it[k] = el.value;
     if (el.tagName === "TEXTAREA") autosize(el);
-    if (k === "tracking") { multi.dupOk = false; $(".mc-dup", card).hidden = true; updateSaveAll(); }
+    if (k === "tracking") { multi.dupOk = false; $(".mc-dup", card).hidden = true; $(".mc-chk", card).hidden = ppCheckOk(normTrk(el.value)) !== false; updateSaveAll(); }
   });
   $("#mCards").addEventListener("focusout", (e) => {
     if (!e.target.matches("input.trk")) return;
@@ -1153,6 +1189,7 @@ dialog::backdrop{background:rgba(10,12,14,.55)}
     v.innerHTML =
       '<div class="d-trk">' + (r.tracking ? esc(fmtTrk(r.tracking)) : "Brak numeru nadania") + "</div>" +
       '<p class="d-sub">Nadano ' + esc(longDate(r.sentDate)) + " · " + esc(flags.join(" · ")) + "</p>" +
+      (ppCheckOk(r.tracking) === false ? '<p class="hint warn" style="margin:-6px 0 14px">' + CHECK_MSG + "</p>" : "") +
       (r.tracking ? '<div class="d-btns"><button class="btn secondary" type="button" data-act="copy">Kopiuj numer</button>' +
         '<button class="btn secondary" type="button" data-act="track">Śledź w eMonitoringu</button></div>' : "") +
       '<div class="d-sec"><h2>Adresat</h2><p>' + esc(addrText(r.recipient) || "—") + "</p></div>" +
